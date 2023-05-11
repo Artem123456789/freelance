@@ -155,7 +155,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-URL_PREFFIX = "edu_exams/"
+URL_PREFFIX = "freelance/"
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")

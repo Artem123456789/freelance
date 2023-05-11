@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
-    container_name: edu_exams
+    container_name: freelance_web
     command: /scripts/run_django.sh
     env_file:
       - .env
@@ -15,7 +15,7 @@ services:
       - "8001:8000"
       - "81:80"
     depends_on:
-      - edu_exams_db
+      - freelance_db
 
   freelance_db:
     image: postgres
