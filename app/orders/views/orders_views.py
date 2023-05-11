@@ -11,6 +11,7 @@ from app.orders.serializers.orders_serialziers import (
     TagListSerializer,
     CategoryListSerializer,
     OrderListSerializer,
+    OrderRetrieveSerializer,
 )
 
 
@@ -40,6 +41,7 @@ class CategoryViewSet(
 
 class OrderViewSet(
     generics.ListAPIView,
+    generics.RetrieveAPIView,
     GenericViewSet,
 ):
     queryset = Order.objects.all()
@@ -49,4 +51,5 @@ class OrderViewSet(
     def get_serializer_class(self):
         return {
             "list": OrderListSerializer,
+            "retrieve": OrderRetrieveSerializer,
         }[self.action]

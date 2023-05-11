@@ -97,6 +97,10 @@ class Order(TimeStampedModel):
     def responses(self):
         return OrderResponse.objects.filter(order=self)
 
+    @property
+    def links_to_communicate(self):
+        return LinkToCommunicate.objects.filter(user=self.user)
+
     class Meta:
         verbose_name = _("Заказ")
         verbose_name_plural = _("Заказы")
@@ -118,6 +122,9 @@ class OrderResponse(TimeStampedModel):
 
 class CommunicationSource(NamedModel):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = _("Источник для cвязи")

@@ -4,6 +4,9 @@ from ..models import (
     Order,
     Tag,
     Category,
+    OrderResponse,
+    LinkToCommunicate,
+    CommunicationSource,
 )
 
 
@@ -39,4 +42,56 @@ class OrderListSerializer(serializers.ModelSerializer):
             'price',
             'tags',
             'categories',
+        ]
+
+
+class OrderResponseRetrieveSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OrderResponse
+        fields = [
+            'user',
+            'text',
+            'suggest_price',
+            'proposed_deadline',
+        ]
+
+
+class CommunicationSourceRetrieveSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CommunicationSource
+        fields = [
+            'uuid',
+            'name',
+        ]
+
+
+class LinkToCommunicateRetrieveSerializer(serializers.ModelSerializer):
+    communication_source = CommunicationSourceRetrieveSerializer()
+
+    class Meta:
+        model = LinkToCommunicate
+        fields = [
+            'communication_source',
+            'link',
+        ]
+
+
+class OrderRetrieveSerializer(serializers.ModelSerializer):
+    tags = TagListSerializer(read_only=True, many=True)
+    responses = OrderResponseRetrieveSerializer(read_only=True, many=True)
+    links_to_communicate = LinkToCommunicateRetrieveSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Order
+        fields = [
+            'uuid',
+            'created',
+            'title',
+            'description',
+            'price',
+            'tags',
+            'responses',
+            'links_to_communicate',
         ]

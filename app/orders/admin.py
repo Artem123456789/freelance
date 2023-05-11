@@ -8,6 +8,8 @@ from .models import (
     OrderExecutionEmployeeInfo,
     Order,
     OrderResponse,
+    CommunicationSource,
+    LinkToCommunicate,
 )
 
 
@@ -43,4 +45,14 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(OrderResponse)
 class OrderResponseAdmin(admin.ModelAdmin):
+    search_fields = ['user__username']
+
+
+@admin.register(CommunicationSource)
+class CommunicationSource(admin.ModelAdmin):
+    search_fields = ['name']
+
+
+@admin.register(LinkToCommunicate)
+class LinkToCommunicateAdmin(admin.ModelAdmin):
     search_fields = ['user__username']
