@@ -101,6 +101,9 @@ class Order(TimeStampedModel):
     def links_to_communicate(self):
         return LinkToCommunicate.objects.filter(user=self.user)
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         verbose_name = _("Заказ")
         verbose_name_plural = _("Заказы")

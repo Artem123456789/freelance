@@ -12,6 +12,7 @@ from app.orders.serializers.orders_serialziers import (
     CategoryListSerializer,
     OrderListSerializer,
     OrderRetrieveSerializer,
+    OrderCreateSerializer,
 )
 
 
@@ -42,6 +43,7 @@ class CategoryViewSet(
 class OrderViewSet(
     generics.ListAPIView,
     generics.RetrieveAPIView,
+    generics.CreateAPIView,
     GenericViewSet,
 ):
     queryset = Order.objects.all()
@@ -52,4 +54,5 @@ class OrderViewSet(
         return {
             "list": OrderListSerializer,
             "retrieve": OrderRetrieveSerializer,
+            "create": OrderCreateSerializer,
         }[self.action]
