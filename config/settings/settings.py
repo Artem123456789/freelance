@@ -143,6 +143,7 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
+AUTH_USER_MODEL = "_auth.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
