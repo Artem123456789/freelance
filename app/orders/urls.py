@@ -18,5 +18,12 @@ router.register(
 )
 router.register("categories", orders_views.CategoryViewSet, basename="categories")
 
+router.register(
+    "orders",
+    orders_views.OrderViewSet,
+    basename="orders"
+)
+router.register("orders", orders_views.OrderViewSet, basename="orders")
+
 
 urlpatterns = router.get_urls()

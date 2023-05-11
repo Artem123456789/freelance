@@ -52,6 +52,7 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt",
     "django_extensions",
     "whitenoise.runserver_nostatic",
+    "django_filters",
 ]
 
 LOCAL_APPS = [
@@ -174,10 +175,11 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100
+    'PAGE_SIZE': 100,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
-#Security
+#  Security
 
 CSRF_COOKIE_SECURE = False
 

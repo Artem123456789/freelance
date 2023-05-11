@@ -4,10 +4,12 @@ from rest_framework.viewsets import GenericViewSet
 from app.orders.models import (
     Tag,
     Category,
+    Order,
 )
 from app.orders.serializers.orders_serialziers import (
     TagListSerializer,
     CategoryListSerializer,
+    OrderListSerializer,
 )
 
 
@@ -35,7 +37,13 @@ class CategoryViewSet(
         }[self.action]
 
 
-# class OrderViewSet(
-#     generics.ListAPIView,
-#     GenericViewSet,
-# )
+class OrderViewSet(
+    generics.ListAPIView,
+    GenericViewSet,
+):
+    queryset = Order.objects.all()
+
+    def get_serializer_class(self):
+        return {
+            "list": OrderListSerializer,
+        }[self.action]

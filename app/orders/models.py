@@ -60,6 +60,9 @@ class OrderExecution(TimeStampedModel):
 class Tag(NamedModel):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = _("Тэг")
         verbose_name_plural = _("Тэги")
@@ -67,6 +70,9 @@ class Tag(NamedModel):
 
 class Category(NamedModel):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = _("Категория")

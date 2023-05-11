@@ -27,7 +27,9 @@ class CategoryListSerializer(serializers.ModelSerializer):
         ]
 
 
-class ListOrderSerializer(serializers.ModelSerializer):
+class OrderListSerializer(serializers.ModelSerializer):
+    tags = TagListSerializer(read_only=True, many=True)
+    categories = CategoryListSerializer(read_only=True, many=True)
 
     class Meta:
         model = Order
@@ -35,5 +37,6 @@ class ListOrderSerializer(serializers.ModelSerializer):
             'uuid',
             'title',
             'price',
-            ''
+            'tags',
+            'categories',
         ]
