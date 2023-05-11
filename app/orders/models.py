@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils.translation import gettext as _
 from django.contrib.auth import get_user_model
@@ -10,6 +12,7 @@ User = get_user_model()
 
 
 class Tag(NamedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     class Meta:
         verbose_name = _("Тэг")
@@ -17,6 +20,7 @@ class Tag(NamedModel):
 
 
 class Category(NamedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     class Meta:
         verbose_name = _("Категория")
@@ -24,6 +28,8 @@ class Category(NamedModel):
 
 
 class OrderExecutionEmployeeInfo(TimeStampedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     text = models.TextField(null=True, blank=True)
     rate = models.IntegerField(null=True, blank=True)
@@ -34,6 +40,8 @@ class OrderExecutionEmployeeInfo(TimeStampedModel):
 
 
 class OrderExecutionCustomerInfo(TimeStampedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     text = models.TextField(null=True, blank=True)
     rate = models.IntegerField(null=True, blank=True)
@@ -44,6 +52,8 @@ class OrderExecutionCustomerInfo(TimeStampedModel):
 
 
 class OrderExecution(TimeStampedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
     execution_employee_info = models.ForeignKey(
         OrderExecutionEmployeeInfo,
         null=True,
@@ -64,6 +74,8 @@ class OrderExecution(TimeStampedModel):
 
 
 class Order(TimeStampedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
     title = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     price = models.FloatField(null=True, blank=True)
@@ -77,6 +89,8 @@ class Order(TimeStampedModel):
 
 
 class OrderTags(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
     tag = models.ForeignKey(Tag, null=True, blank=True, on_delete=models.SET_NULL)
     order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.SET_NULL)
 
@@ -86,6 +100,8 @@ class OrderTags(models.Model):
 
 
 class OrderCategory(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.SET_NULL)
 
@@ -95,6 +111,8 @@ class OrderCategory(models.Model):
 
 
 class OrderResponse(TimeStampedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
     order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     text = models.TextField(null=True, blank=True)
@@ -107,6 +125,7 @@ class OrderResponse(TimeStampedModel):
 
 
 class CommunicationSource(NamedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     class Meta:
         verbose_name = _("Источник для cвязи")
@@ -114,6 +133,8 @@ class CommunicationSource(NamedModel):
 
 
 class LinkToCommunicate(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     communication_source = models.ForeignKey(CommunicationSource, null=True, blank=True, on_delete=models.SET_NULL)
     link = models.CharField(max_length=100, null=True, blank=True)
