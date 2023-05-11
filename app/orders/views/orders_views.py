@@ -6,6 +6,7 @@ from app.orders.models import (
     Tag,
     Category,
     Order,
+    OrderResponse,
 )
 from app.orders.serializers.orders_serialziers import (
     TagListSerializer,
@@ -13,6 +14,7 @@ from app.orders.serializers.orders_serialziers import (
     OrderListSerializer,
     OrderRetrieveSerializer,
     OrderCreateSerializer,
+    OrderResponseCreateSerializer,
 )
 
 
@@ -55,4 +57,16 @@ class OrderViewSet(
             "list": OrderListSerializer,
             "retrieve": OrderRetrieveSerializer,
             "create": OrderCreateSerializer,
+        }[self.action]
+
+
+class OrderResponseViewSet(
+    generics.CreateAPIView,
+    GenericViewSet,
+):
+    queryset = OrderResponse.objects.all()
+
+    def get_serializer_class(self):
+        return {
+            "create": OrderResponseCreateSerializer,
         }[self.action]

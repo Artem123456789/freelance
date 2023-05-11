@@ -25,5 +25,12 @@ router.register(
 )
 router.register("orders", orders_views.OrderViewSet, basename="orders")
 
+router.register(
+    "order_responses",
+    orders_views.OrderResponseViewSet,
+    basename="order_responses"
+)
+router.register("order_responses", orders_views.OrderResponseViewSet, basename="order_responses")
+
 
 urlpatterns = router.get_urls()

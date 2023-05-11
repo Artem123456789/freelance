@@ -113,3 +113,20 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         ]
 
         read_only_fields = ['uuid']
+
+
+class OrderResponseCreateSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = OrderResponse
+        fields = [
+            'uuid',
+            'user',
+            'order',
+            'text',
+            'suggest_price',
+            'proposed_deadline',
+        ]
+
+        read_only_fields = ['uuid']
