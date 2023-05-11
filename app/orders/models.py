@@ -86,9 +86,9 @@ class Order(TimeStampedModel):
     title = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     price = models.FloatField(null=True, blank=True)
-    is_done = models.BooleanField(null=True, blank=True)
+    is_done = models.BooleanField(null=True, blank=True, default=False)
     order_execution = models.ForeignKey(OrderExecution, null=True, blank=True, on_delete=models.SET_NULL)
-    is_employee_selected = models.BooleanField(null=True, blank=True)
+    is_employee_selected = models.BooleanField(null=True, blank=True, default=False)
 
     tags = models.ManyToManyField(Tag, null=True, blank=True)
     categories = models.ManyToManyField(Category, null=True, blank=True)
