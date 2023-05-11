@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.viewsets import GenericViewSet
 
@@ -42,6 +43,8 @@ class OrderViewSet(
     GenericViewSet,
 ):
     queryset = Order.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['tags', 'categories']
 
     def get_serializer_class(self):
         return {
