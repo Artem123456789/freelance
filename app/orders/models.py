@@ -104,3 +104,20 @@ class OrderResponse(TimeStampedModel):
     class Meta:
         verbose_name = _("Ответ на заказ")
         verbose_name_plural = _("Ответы на заказы")
+
+
+class CommunicationSource(NamedModel):
+
+    class Meta:
+        verbose_name = _("Источник для cвязи")
+        verbose_name_plural = _("Источники для cвязи")
+
+
+class LinkToCommunicate(models.Model):
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    communication_source = models.ForeignKey(CommunicationSource, null=True, blank=True, on_delete=models.SET_NULL)
+    link = models.CharField(max_length=100, null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("Ссылка для связи")
+        verbose_name_plural = _("Ссылки для связи")
