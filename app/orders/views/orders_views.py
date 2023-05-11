@@ -33,3 +33,9 @@ class CategoryViewSet(
         return {
             "list": CategoryListSerializer,
         }[self.action]
+
+
+# class OrderViewSet(
+#     generics.ListAPIView,
+#     GenericViewSet,
+# )

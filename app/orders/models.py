@@ -11,22 +11,6 @@ from django_extensions.db.models import TimeStampedModel
 User = get_user_model()
 
 
-class Tag(NamedModel):
-    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-
-    class Meta:
-        verbose_name = _("Тэг")
-        verbose_name_plural = _("Тэги")
-
-
-class Category(NamedModel):
-    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-
-    class Meta:
-        verbose_name = _("Категория")
-        verbose_name_plural = _("Категории")
-
-
 class OrderExecutionEmployeeInfo(TimeStampedModel):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
@@ -73,6 +57,22 @@ class OrderExecution(TimeStampedModel):
         verbose_name_plural = _("Информация об исполнении заказов")
 
 
+class Tag(NamedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
+    class Meta:
+        verbose_name = _("Тэг")
+        verbose_name_plural = _("Тэги")
+
+
+class Category(NamedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
+    class Meta:
+        verbose_name = _("Категория")
+        verbose_name_plural = _("Категории")
+
+
 class Order(TimeStampedModel):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
@@ -83,31 +83,12 @@ class Order(TimeStampedModel):
     order_execution = models.ForeignKey(OrderExecution, null=True, blank=True, on_delete=models.SET_NULL)
     is_employee_selected = models.BooleanField(null=True, blank=True)
 
+    tags = models.ManyToManyField(Tag, null=True, blank=True)
+    categories = models.ManyToManyField(Category, null=True, blank=True)
+
     class Meta:
         verbose_name = _("Заказ")
         verbose_name_plural = _("Заказы")
-
-
-class OrderTags(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-
-    tag = models.ForeignKey(Tag, null=True, blank=True, on_delete=models.SET_NULL)
-    order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _("Тэг заказа")
-        verbose_name_plural = _("Тэги заказов")
-
-
-class OrderCategory(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-
-    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
-    order = models.ForeignKey(Order, null=True, blank=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _("Категория заказа")
-        verbose_name_plural = _("Категории заказов")
 
 
 class OrderResponse(TimeStampedModel):

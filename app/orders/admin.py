@@ -7,8 +7,6 @@ from .models import (
     OrderExecutionCustomerInfo,
     OrderExecutionEmployeeInfo,
     Order,
-    OrderTags,
-    OrderCategory,
     OrderResponse,
 )
 
@@ -41,16 +39,6 @@ class OrderExecutionAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     search_fields = ['title', 'user__username']
-
-
-@admin.register(OrderTags)
-class OrderTagsAdmin(admin.ModelAdmin):
-    search_fields = ['order__title']
-
-
-@admin.register(OrderCategory)
-class OrderCategoryAdmin(admin.ModelAdmin):
-    search_fields = ['order__title']
 
 
 @admin.register(OrderResponse)
