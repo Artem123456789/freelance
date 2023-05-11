@@ -11,7 +11,6 @@ router.register(
 )
 router.register("tags", orders_views.TagViewSet, basename="tags")
 
-router = DefaultRouter()
 router.register(
     "categories",
     orders_views.CategoryViewSet,
