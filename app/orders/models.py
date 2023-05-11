@@ -81,6 +81,7 @@ class Category(NamedModel):
 
 class Order(TimeStampedModel):
     uuid = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 
     title = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -91,6 +92,10 @@ class Order(TimeStampedModel):
 
     tags = models.ManyToManyField(Tag, null=True, blank=True)
     categories = models.ManyToManyField(Category, null=True, blank=True)
+
+    @property
+    def responses(self):
+        return OrderResponse.objects.filter(order=self)
 
     class Meta:
         verbose_name = _("Заказ")
