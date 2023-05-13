@@ -50,7 +50,7 @@ class OrderExecution(TimeStampedModel):
         blank=True,
         on_delete=models.SET_NULL,
     )
-    is_paid = models.BooleanField(null=True, blank=True)
+    is_paid = models.BooleanField(null=True, blank=True, default=False)
 
     class Meta:
         verbose_name = _("Информация об исполнении заказа")
