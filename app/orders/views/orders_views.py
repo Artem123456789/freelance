@@ -16,6 +16,8 @@ from app.orders.models import (
     OrderResponse,
     OrderExecutionEmployeeInfo,
     OrderExecutionCustomerInfo,
+    LinkToCommunicate,
+    CommunicationSource,
 )
 from app.orders.serializers.orders_serialziers import (
     TagListSerializer,
@@ -28,6 +30,9 @@ from app.orders.serializers.orders_serialziers import (
     OrderExecutionDetailSerializer,
     OrderExecutionCustomerInfoUpdateSerializer,
     OrderExecutionEmployeeInfoUpdateSerializer,
+    LinkToCommunicateListSerializer,
+    LinkToCommunicateCreateSerializer,
+    CommunicationSourceListSerializer,
 )
 
 
@@ -161,4 +166,31 @@ class OrderExecutionEmployeeInfoViewSet(
     def get_serializer_class(self):
         return {
             "partial_update": OrderExecutionEmployeeInfoUpdateSerializer,
+        }[self.action]
+
+
+class CommunicationSourceViewSet(
+    generics.ListAPIView,
+    GenericViewSet,
+):
+    queryset = CommunicationSource.objects.all()
+
+    def get_serializer_class(self):
+        return {
+            "list": CommunicationSourceListSerializer,
+        }[self.action]
+
+
+class LinkToCommunicateViewSet(
+    generics.ListAPIView,
+    generics.CreateAPIView,
+    GenericViewSet,
+):
+    def get_queryset(self):
+        return LinkToCommunicate.objects.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        return {
+            "list": LinkToCommunicateListSerializer,
+            "create": LinkToCommunicateCreateSerializer,
         }[self.action]

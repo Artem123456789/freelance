@@ -66,7 +66,7 @@ class OrderResponseRetrieveSerializer(serializers.ModelSerializer):
         ]
 
 
-class CommunicationSourceRetrieveSerializer(serializers.ModelSerializer):
+class CommunicationSourceListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommunicationSource
@@ -76,8 +76,8 @@ class CommunicationSourceRetrieveSerializer(serializers.ModelSerializer):
         ]
 
 
-class LinkToCommunicateRetrieveSerializer(serializers.ModelSerializer):
-    communication_source = CommunicationSourceRetrieveSerializer()
+class LinkToCommunicateListSerializer(serializers.ModelSerializer):
+    communication_source = CommunicationSourceListSerializer()
 
     class Meta:
         model = LinkToCommunicate
@@ -87,10 +87,22 @@ class LinkToCommunicateRetrieveSerializer(serializers.ModelSerializer):
         ]
 
 
+class LinkToCommunicateCreateSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = LinkToCommunicate
+        fields = [
+            'user',
+            'communication_source',
+            'link',
+        ]
+
+
 class OrderRetrieveSerializer(serializers.ModelSerializer):
     tags = TagListSerializer(read_only=True, many=True)
     responses = OrderResponseRetrieveSerializer(read_only=True, many=True)
-    links_to_communicate = LinkToCommunicateRetrieveSerializer(read_only=True, many=True)
+    links_to_communicate = LinkToCommunicateListSerializer(read_only=True, many=True)
 
     is_creator = serializers.SerializerMethodField()
 

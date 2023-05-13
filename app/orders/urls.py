@@ -44,5 +44,17 @@ router.register(
     basename="order_execution_employees_infos"
 )
 
+router.register(
+    "communication_sources",
+    orders_views.CommunicationSourceViewSet,
+    basename="communication_sources"
+)
+
+router.register(
+    "link_communicate",
+    orders_views.LinkToCommunicateViewSet,
+    basename="link_communicate"
+)
+
 
 urlpatterns = router.get_urls()
