@@ -82,6 +82,7 @@ class LinkToCommunicateListSerializer(serializers.ModelSerializer):
     class Meta:
         model = LinkToCommunicate
         fields = [
+            'uuid',
             'communication_source',
             'link',
         ]
@@ -94,6 +95,16 @@ class LinkToCommunicateCreateSerializer(serializers.ModelSerializer):
         model = LinkToCommunicate
         fields = [
             'user',
+            'communication_source',
+            'link',
+        ]
+
+
+class LinkToCommunicateUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LinkToCommunicate
+        fields = [
             'communication_source',
             'link',
         ]

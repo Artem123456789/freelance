@@ -8,6 +8,7 @@ from rest_framework.permissions import (
     AllowAny,
 )
 
+from app.libs.serialziers import NoneSerializer
 from app.orders.handlers.orders_handlers import OrdersHandler
 from app.orders.models import (
     Tag,
@@ -33,6 +34,7 @@ from app.orders.serializers.orders_serialziers import (
     LinkToCommunicateListSerializer,
     LinkToCommunicateCreateSerializer,
     CommunicationSourceListSerializer,
+    LinkToCommunicateUpdateSerializer,
 )
 
 
@@ -184,6 +186,8 @@ class CommunicationSourceViewSet(
 class LinkToCommunicateViewSet(
     generics.ListAPIView,
     generics.CreateAPIView,
+    generics.UpdateAPIView,
+    generics.DestroyAPIView,
     GenericViewSet,
 ):
     def get_queryset(self):
@@ -193,4 +197,6 @@ class LinkToCommunicateViewSet(
         return {
             "list": LinkToCommunicateListSerializer,
             "create": LinkToCommunicateCreateSerializer,
+            "partial_update": LinkToCommunicateUpdateSerializer,
+            "delete": NoneSerializer,
         }[self.action]
