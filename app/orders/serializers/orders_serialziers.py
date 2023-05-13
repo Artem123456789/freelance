@@ -226,3 +226,23 @@ class OrderExecutionDetailSerializer(serializers.ModelSerializer):
             'is_done',
             'order_execution',
         ]
+
+
+class OrderExecutionCustomerInfoUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OrderExecutionCustomerInfo
+        fields = [
+            'rate',
+            'text',
+        ]
+
+
+class OrderExecutionEmployeeInfoUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OrderExecutionEmployeeInfo
+        fields = [
+            'rate',
+            'text',
+        ]

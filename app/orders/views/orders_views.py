@@ -14,6 +14,8 @@ from app.orders.models import (
     Category,
     Order,
     OrderResponse,
+    OrderExecutionEmployeeInfo,
+    OrderExecutionCustomerInfo,
 )
 from app.orders.serializers.orders_serialziers import (
     TagListSerializer,
@@ -24,6 +26,8 @@ from app.orders.serializers.orders_serialziers import (
     OrderResponseCreateSerializer,
     ChooseEmployeeInputSerializer,
     OrderExecutionDetailSerializer,
+    OrderExecutionCustomerInfoUpdateSerializer,
+    OrderExecutionEmployeeInfoUpdateSerializer,
 )
 
 
@@ -123,4 +127,28 @@ class OrderResponseViewSet(
     def get_serializer_class(self):
         return {
             "create": OrderResponseCreateSerializer,
+        }[self.action]
+
+
+class OrderExecutionCustomerInfoViewSet(
+    generics.UpdateAPIView,
+    GenericViewSet,
+):
+    queryset = OrderExecutionCustomerInfo.objects.all()
+
+    def get_serializer_class(self):
+        return {
+            "partial_update": OrderExecutionCustomerInfoUpdateSerializer,
+        }[self.action]
+
+
+class OrderExecutionEmployeeInfoViewSet(
+    generics.UpdateAPIView,
+    GenericViewSet,
+):
+    queryset = OrderExecutionEmployeeInfo.objects.all()
+
+    def get_serializer_class(self):
+        return {
+            "partial_update": OrderExecutionEmployeeInfoUpdateSerializer,
         }[self.action]
