@@ -51,6 +51,7 @@ class OrderListSerializer(serializers.ModelSerializer):
             'price',
             'tags',
             'categories',
+            'is_done',
         ]
 
 
