@@ -71,3 +71,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'customer_orders',
             'employee_orders',
         ]
+
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = [
+            'customer_description',
+            'employee_description'
+        ]
