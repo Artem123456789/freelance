@@ -5,6 +5,8 @@ from dataclasses import dataclass
 class RegisterInputEntity:
     username: str
     password: str
+    customer_description: str
+    employee_description: str
 
 
 @dataclass
