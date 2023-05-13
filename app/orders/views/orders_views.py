@@ -117,6 +117,16 @@ class OrderViewSet(
 
         return Response(self.get_serializer(order).data)
 
+    @action(methods=['post'], detail=True)
+    def pay(self, request, *args, **kwargs):
+        order = self.get_object()
+
+        order_execution = order.order_execution
+        order_execution.is_paid = True
+        order_execution.save()
+
+        return Response()
+
 
 class OrderResponseViewSet(
     generics.CreateAPIView,
