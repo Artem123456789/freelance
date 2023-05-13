@@ -3,6 +3,10 @@ from rest_framework import generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.permissions import (
+    IsAuthenticated,
+    AllowAny,
+)
 
 from app.orders.handlers.orders_handlers import OrdersHandler
 from app.orders.models import (
@@ -52,9 +56,9 @@ class OrderViewSet(
     generics.CreateAPIView,
     GenericViewSet,
 ):
-    queryset = Order.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['tags', 'categories']
+    queryset = Order.objects.all()
 
     def get_serializer_class(self):
         return {
@@ -62,7 +66,15 @@ class OrderViewSet(
             "retrieve": OrderRetrieveSerializer,
             "create": OrderCreateSerializer,
             "choose_employee": ChooseEmployeeInputSerializer,
+            "customer_orders": OrderListSerializer,
         }[self.action]
+
+    @action(methods=['get'], detail=False)
+    def customer_orders(self, request, *args, **kwargs):
+        orders = Order.objects.filter(user=self.request.user)
+        serializer = self.get_serializer(orders, many=True)
+
+        return Response(serializer.data)
 
     @action(methods=['post'], detail=True)
     def choose_employee(self, request, pk, *args, **kwargs):
