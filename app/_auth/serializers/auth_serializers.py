@@ -58,7 +58,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return OrderListSerializer(Order.objects.filter(user=user), many=True).data
 
     def get_employee_orders(self, user: User):
-        return OrderListSerializer(OrdersHandler().employee_orders(user=user)).data
+        return OrderListSerializer(OrdersHandler().employee_orders(user=user), many=True).data
 
     class Meta:
         model = User
