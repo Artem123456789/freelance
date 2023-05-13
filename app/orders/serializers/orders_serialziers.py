@@ -8,6 +8,9 @@ from ..models import (
     OrderResponse,
     LinkToCommunicate,
     CommunicationSource,
+    OrderExecution,
+    OrderExecutionEmployeeInfo,
+    OrderExecutionCustomerInfo,
 )
 from ...libs.serialziers import BaseSerializer
 
@@ -159,3 +162,67 @@ class ChooseEmployeeInputSerializer(BaseSerializer):
             employee=employee,
             customer=validated_data['customer']
         )
+
+
+class OrderExecutionEmployeeInfoRetrieveSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OrderExecutionEmployeeInfo
+        fields = [
+            'uuid',
+            'user',
+        ]
+
+
+class OrderExecutionCustomerInfoRetrieveSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OrderExecutionCustomerInfo
+        fields = [
+            'uuid',
+            'user',
+        ]
+
+
+class OrderExecutionRetrieveSerializer(serializers.ModelSerializer):
+    execution_employee_info = OrderExecutionEmployeeInfoRetrieveSerializer(read_only=True)
+    execution_customer_info = OrderExecutionCustomerInfoRetrieveSerializer(read_only=True)
+
+    class Meta:
+        model = OrderExecution
+        fields = [
+            'uuid',
+            'is_paid',
+            'execution_employee_info',
+            'execution_customer_info',
+        ]
+
+
+class OrderExecutionDetailSerializer(serializers.ModelSerializer):
+    order_execution = OrderExecutionRetrieveSerializer(read_only=True)
+    is_creator = serializers.SerializerMethodField()
+    is_employee = serializers.SerializerMethodField()
+
+    def get_is_creator(self, order: Order):
+        request_user = self.context['request'].user
+
+        return request_user == order.user
+
+    def get_is_employee(self, order: Order):
+        request_user = self.context['request'].user
+
+        return order.order_execution.execution_employee_info.user == request_user
+
+    class Meta:
+        model = Order
+        fields = [
+            'uuid',
+            'created',
+            'title',
+            'description',
+            'price',
+            'is_creator',
+            'is_employee',
+            'is_done',
+            'order_execution',
+        ]

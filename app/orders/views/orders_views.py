@@ -23,6 +23,7 @@ from app.orders.serializers.orders_serialziers import (
     OrderCreateSerializer,
     OrderResponseCreateSerializer,
     ChooseEmployeeInputSerializer,
+    OrderExecutionDetailSerializer,
 )
 
 
@@ -68,6 +69,7 @@ class OrderViewSet(
             "choose_employee": ChooseEmployeeInputSerializer,
             "customer_orders": OrderListSerializer,
             "employee_orders": OrderListSerializer,
+            "execution_detail": OrderExecutionDetailSerializer,
         }[self.action]
 
     @action(methods=['get'], detail=False)
@@ -104,6 +106,12 @@ class OrderViewSet(
         OrdersHandler(order=order).complete_order()
 
         return Response()
+
+    @action(methods=['get'], detail=True)
+    def execution_detail(self, request, *args, **kwargs):
+        order = self.get_object()
+
+        return Response(self.get_serializer(order).data)
 
 
 class OrderResponseViewSet(

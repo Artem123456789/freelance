@@ -15,5 +15,7 @@ class AuthHandler:
 
         user = User(username=input_entity.username)
         user.set_password(input_entity.password)
+        user.customer_description = input_entity.customer_description
+        user.employee_description = input_entity.employee_description
         user.save()
         return user
