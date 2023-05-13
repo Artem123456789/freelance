@@ -174,6 +174,41 @@ class OrderResponseCreateSerializer(serializers.ModelSerializer):
         read_only_fields = ['uuid']
 
 
+class OrderOrderResponseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Order
+        fields = [
+            'uuid',
+            'title'
+        ]
+
+
+class OrderResponseListSerializer(serializers.ModelSerializer):
+    order = OrderOrderResponseSerializer(read_only=True)
+
+    class Meta:
+        model = OrderResponse
+        fields = [
+            'uuid',
+            'user',
+            'order',
+            'text',
+            'suggest_price',
+            'proposed_deadline',
+            'is_seen',
+        ]
+
+
+class OrderResponseUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OrderResponse
+        fields = [
+            'is_seen',
+        ]
+
+
 class ChooseEmployeeInputSerializer(BaseSerializer):
     employee_id = serializers.IntegerField()
     customer = serializers.HiddenField(default=serializers.CurrentUserDefault())

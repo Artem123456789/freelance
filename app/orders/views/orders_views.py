@@ -35,6 +35,8 @@ from app.orders.serializers.orders_serialziers import (
     LinkToCommunicateCreateSerializer,
     CommunicationSourceListSerializer,
     LinkToCommunicateUpdateSerializer,
+    OrderResponseListSerializer,
+    OrderResponseUpdateSerializer,
 )
 
 
@@ -137,13 +139,23 @@ class OrderViewSet(
 
 class OrderResponseViewSet(
     generics.CreateAPIView,
+    generics.ListAPIView,
+    generics.UpdateAPIView,
     GenericViewSet,
 ):
-    queryset = OrderResponse.objects.all()
+    def get_queryset(self):
+        if self.action == "list":
+            user_orders = Order.objects.filter(user=self.request.user)
+
+            return OrderResponse.objects.filter(order__in=user_orders)
+
+        return OrderResponse.objects.all()
 
     def get_serializer_class(self):
         return {
             "create": OrderResponseCreateSerializer,
+            "list": OrderResponseListSerializer,
+            "partial_update": OrderResponseUpdateSerializer,
         }[self.action]
 
 

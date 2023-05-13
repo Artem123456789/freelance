@@ -122,6 +122,8 @@ class OrderResponse(TimeStampedModel):
     suggest_price = models.FloatField(null=True, blank=True)
     proposed_deadline = models.CharField(max_length=100, null=True, blank=True)
 
+    is_seen = models.BooleanField(null=True, blank=True, default=False)
+
     class Meta:
         verbose_name = _("Ответ на заказ")
         verbose_name_plural = _("Ответы на заказы")
