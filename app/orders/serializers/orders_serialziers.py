@@ -116,6 +116,7 @@ class OrderRetrieveSerializer(serializers.ModelSerializer):
     responses = OrderResponseRetrieveSerializer(read_only=True, many=True)
     links_to_communicate = LinkToCommunicateListSerializer(read_only=True, many=True)
     creator_username = serializers.SerializerMethodField()
+    creator_user_id = serializers.SerializerMethodField()
 
     is_creator = serializers.SerializerMethodField()
 
@@ -126,6 +127,9 @@ class OrderRetrieveSerializer(serializers.ModelSerializer):
 
     def get_creator_username(self, order: Order):
         return order.user.username
+
+    def get_creator_user_id(self, order: Order):
+        return order.user.id
 
     class Meta:
         model = Order
@@ -142,6 +146,7 @@ class OrderRetrieveSerializer(serializers.ModelSerializer):
             'is_employee_selected',
             'is_done',
             'creator_username',
+            'creator_user_id',
         ]
 
 
