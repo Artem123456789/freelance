@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
@@ -27,7 +27,6 @@ def register(request):
 
 
 class UserViewSet(
-    generics.UpdateAPIView,
     GenericViewSet,
 ):
     queryset = User.objects.all()
@@ -37,3 +36,9 @@ class UserViewSet(
             "profile": UserProfileSerializer,
         }[self.action]
 
+    @action(methods=['get'], detail=False)
+    def profile(self, request, *args, **kwargs):
+        user = self.request.user
+        serializer = self.get_serializer(user)
+
+        return Response(serializer.data)
