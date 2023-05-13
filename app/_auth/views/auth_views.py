@@ -27,12 +27,14 @@ def register(request):
 
 
 class UserViewSet(
+    generics.RetrieveAPIView,
     GenericViewSet,
 ):
     queryset = User.objects.all()
 
     def get_serializer_class(self):
         return {
+            "retrieve": UserProfileSerializer,
             "profile": UserProfileSerializer,
         }[self.action]
 
