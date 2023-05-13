@@ -36,3 +36,7 @@ class OrdersHandler:
         self.order.order_execution = order_execution
 
         self.order.save()
+
+    def complete_order(self) -> None:
+        self.order.is_done = True
+        self.order.save()

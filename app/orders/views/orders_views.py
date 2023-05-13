@@ -77,6 +77,14 @@ class OrderViewSet(
 
         return Response()
 
+    @action(methods=['post'], detail=True)
+    def complete(self, request, pk, *args, **kwargs):
+        order = self.get_object()
+
+        OrdersHandler(order=order).complete_order()
+
+        return Response()
+
 
 class OrderResponseViewSet(
     generics.CreateAPIView,

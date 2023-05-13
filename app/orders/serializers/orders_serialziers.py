@@ -109,6 +109,7 @@ class OrderRetrieveSerializer(serializers.ModelSerializer):
             'links_to_communicate',
             'is_creator',
             'is_employee_selected',
+            'is_done',
         ]
 
 
