@@ -1,3 +1,5 @@
+from typing import List
+
 from app.orders.enitites.orders_entities import ChooseEmployeeInputEntity
 from app.orders.models import (
     Order,
@@ -13,7 +15,7 @@ User = get_user_model()
 
 class OrdersHandler:
 
-    def __init__(self, order: Order):
+    def __init__(self, order: Order = None):
         self.order = order
 
     def choose_employee(
@@ -40,3 +42,10 @@ class OrdersHandler:
     def complete_order(self) -> None:
         self.order.is_done = True
         self.order.save()
+
+    def employee_orders(self, user: User) -> List[Order]:
+        employee_executions = OrderExecutionEmployeeInfo.objects.filter(user=user)
+        order_executions = OrderExecution.objects.filter(execution_employee_info__in=employee_executions)
+
+        orders = Order.objects.filter(order_execution__in=order_executions)
+        return orders

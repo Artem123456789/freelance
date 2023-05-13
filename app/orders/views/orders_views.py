@@ -67,11 +67,19 @@ class OrderViewSet(
             "create": OrderCreateSerializer,
             "choose_employee": ChooseEmployeeInputSerializer,
             "customer_orders": OrderListSerializer,
+            "employee_orders": OrderListSerializer,
         }[self.action]
 
     @action(methods=['get'], detail=False)
     def customer_orders(self, request, *args, **kwargs):
         orders = Order.objects.filter(user=self.request.user)
+        serializer = self.get_serializer(orders, many=True)
+
+        return Response(serializer.data)
+
+    @action(methods=['get'], detail=False)
+    def employee_orders(self, request, *args, **kwargs):
+        orders = OrdersHandler().employee_orders(user=self.request.user)
         serializer = self.get_serializer(orders, many=True)
 
         return Response(serializer.data)
