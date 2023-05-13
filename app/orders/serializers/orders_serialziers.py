@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from ..enitites.orders_entities import ChooseEmployeeInputEntity
 from ..models import (
     Order,
     Tag,
@@ -8,6 +9,11 @@ from ..models import (
     LinkToCommunicate,
     CommunicationSource,
 )
+from ...libs.serialziers import BaseSerializer
+
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class TagListSerializer(serializers.ModelSerializer):
@@ -130,3 +136,16 @@ class OrderResponseCreateSerializer(serializers.ModelSerializer):
         ]
 
         read_only_fields = ['uuid']
+
+
+class ChooseEmployeeInputSerializer(BaseSerializer):
+    employee_id = serializers.IntegerField()
+    customer = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    def create(self, validated_data: dict) -> ChooseEmployeeInputEntity:
+        employee = User.objects.get(id=validated_data['employee_id'])
+
+        return ChooseEmployeeInputEntity(
+            employee=employee,
+            customer=validated_data['customer']
+        )
