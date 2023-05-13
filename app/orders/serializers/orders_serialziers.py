@@ -89,6 +89,13 @@ class OrderRetrieveSerializer(serializers.ModelSerializer):
     responses = OrderResponseRetrieveSerializer(read_only=True, many=True)
     links_to_communicate = LinkToCommunicateRetrieveSerializer(read_only=True, many=True)
 
+    is_creator = serializers.SerializerMethodField()
+
+    def get_is_creator(self, order: Order):
+        request_user = self.context['request'].user
+
+        return request_user == order.user
+
     class Meta:
         model = Order
         fields = [
@@ -100,6 +107,8 @@ class OrderRetrieveSerializer(serializers.ModelSerializer):
             'tags',
             'responses',
             'links_to_communicate',
+            'is_creator',
+            'is_employee_selected',
         ]
 
 
