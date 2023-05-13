@@ -9,6 +9,7 @@ from app.orders.models import (
 )
 
 from django.contrib.auth import get_user_model
+from django.utils.timezone import now
 
 User = get_user_model()
 
@@ -36,11 +37,14 @@ class OrdersHandler:
 
         self.order.is_employee_selected = True
         self.order.order_execution = order_execution
+        self.order.datetime_employee_selected = now()
+        self.order.deadline_date = input_entity.deadline_date
 
         self.order.save()
 
     def complete_order(self) -> None:
         self.order.is_done = True
+        self.order.datetime_compelete = now()
         self.order.save()
 
     def employee_orders(self, user: User) -> List[Order]:

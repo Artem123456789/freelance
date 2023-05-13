@@ -93,6 +93,10 @@ class Order(TimeStampedModel):
     tags = models.ManyToManyField(Tag, null=True, blank=True)
     categories = models.ManyToManyField(Category, null=True, blank=True)
 
+    datetime_employee_selected = models.DateTimeField(null=True, blank=True)
+    deadline_date = models.DateField(null=True, blank=True)
+    datetime_compelete = models.DateTimeField(null=True, blank=True)
+
     @property
     def responses(self):
         return OrderResponse.objects.filter(order=self)

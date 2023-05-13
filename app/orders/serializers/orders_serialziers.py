@@ -177,13 +177,15 @@ class OrderResponseCreateSerializer(serializers.ModelSerializer):
 class ChooseEmployeeInputSerializer(BaseSerializer):
     employee_id = serializers.IntegerField()
     customer = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    deadline_date = serializers.DateField()
 
     def create(self, validated_data: dict) -> ChooseEmployeeInputEntity:
         employee = User.objects.get(id=validated_data['employee_id'])
 
         return ChooseEmployeeInputEntity(
             employee=employee,
-            customer=validated_data['customer']
+            customer=validated_data['customer'],
+            deadline_date=validated_data['deadline_date']
         )
 
 
@@ -248,6 +250,9 @@ class OrderExecutionDetailSerializer(serializers.ModelSerializer):
             'is_employee',
             'is_done',
             'order_execution',
+            'datetime_employee_selected',
+            'deadline_date',
+            'datetime_compelete',
         ]
 
 
