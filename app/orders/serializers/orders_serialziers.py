@@ -56,6 +56,12 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 
 class OrderResponseRetrieveSerializer(serializers.ModelSerializer):
+    is_creator = serializers.SerializerMethodField()
+
+    def get_is_creator(self, order: Order):
+        request_user = self.context['request'].user
+
+        return request_user == order.user
 
     class Meta:
         model = OrderResponse
@@ -65,6 +71,7 @@ class OrderResponseRetrieveSerializer(serializers.ModelSerializer):
             'text',
             'suggest_price',
             'proposed_deadline',
+            'is_creator',
         ]
 
 
