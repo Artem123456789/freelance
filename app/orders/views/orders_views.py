@@ -68,6 +68,7 @@ class OrderViewSet(
     generics.ListAPIView,
     generics.RetrieveAPIView,
     generics.CreateAPIView,
+    generics.DestroyAPIView,
     GenericViewSet,
 ):
     filter_backends = [DjangoFilterBackend]
@@ -83,6 +84,7 @@ class OrderViewSet(
             "customer_orders": OrderListSerializer,
             "employee_orders": OrderListSerializer,
             "execution_detail": OrderExecutionDetailSerializer,
+            "delete": NoneSerializer,
         }[self.action]
 
     @action(methods=['get'], detail=False)
@@ -141,6 +143,7 @@ class OrderResponseViewSet(
     generics.CreateAPIView,
     generics.ListAPIView,
     generics.UpdateAPIView,
+    generics.DestroyAPIView,
     GenericViewSet,
 ):
     def get_queryset(self):
@@ -156,6 +159,7 @@ class OrderResponseViewSet(
             "create": OrderResponseCreateSerializer,
             "list": OrderResponseListSerializer,
             "partial_update": OrderResponseUpdateSerializer,
+            "delete": NoneSerializer,
         }[self.action]
 
 
