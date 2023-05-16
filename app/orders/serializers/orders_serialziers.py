@@ -60,6 +60,7 @@ class OrderResponseRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderResponse
         fields = [
+            'uuid',
             'user',
             'text',
             'suggest_price',
