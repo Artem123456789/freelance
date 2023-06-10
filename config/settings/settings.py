@@ -20,6 +20,14 @@ import dj_database_url
 load_dotenv()
 
 
+def get_secret(key, default):
+    value = os.getenv(key, default)
+    if os.path.isfile(value):
+        with open(value) as f:
+            return f.read()
+    return value
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,10 +36,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = get_secret("SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.getenv("DEBUG", "1") == "1")
+DEBUG = bool(get_secret("DEBUG", "1") == "1")
 
 ALLOWED_HOSTS = ["*"]
 
@@ -98,7 +106,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
+DATABASES = {
+    "default": {
+        "PORT": get_secret("POSTGRES_PORT", ""),
+        "HOST": get_secret("POSTGRES_HOST", ""),
+        "NAME": get_secret("POSTGRES_DB", ""),
+        "USER": get_secret("POSTGRES_USER", ""),
+        "PASSWORD": get_secret("POSTGRES_PASSWORD", ""),
+    }
+}
 
 
 # Password validation
@@ -121,8 +137,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # JWT
 
-JWT_ACCESS_LIFETIME = int(os.getenv("JWT_ACCESS_LIFETIME", "600"))
-JWT_REFRESH_LIFETIME = int(os.getenv("JWT_REFRESH_LIFETIME", "1200"))
+JWT_ACCESS_LIFETIME = int(get_secret("JWT_ACCESS_LIFETIME", "600"))
+JWT_REFRESH_LIFETIME = int(get_secret("JWT_REFRESH_LIFETIME", "1200"))
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=JWT_ACCESS_LIFETIME),
