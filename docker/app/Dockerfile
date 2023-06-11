@@ -32,4 +32,4 @@ RUN ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled
 
 COPY . /project
 
-ENTRYPOINT ["/scripts/install-nginx.sh", "/scripts/run_django.sh"]
+ENTRYPOINT ["/scripts/run_django.sh"]
