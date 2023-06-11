@@ -4,6 +4,10 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+export NGINX_VERSION=1.17.10
+export NJS_VERSION=0.3.9
+export PKG_RELEASE=1~buster
+
 echo "run django"
 
 NGINX_MAX_UPLOAD=0
