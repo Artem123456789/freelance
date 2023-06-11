@@ -22,10 +22,6 @@ COPY ./docker/scripts/run_django.sh /scripts/run_django.sh
 RUN sed -i 's/\r$//g' /scripts/run_django.sh
 RUN chmod +x /scripts/run_django.sh
 
-COPY ./docker/scripts/entrypoint.sh /scripts/entrypoint.sh
-RUN sed -i 's/\r$//g' /scripts/entrypoint.sh
-RUN chmod +x /scripts/entrypoint.sh
-
 COPY ./docker/scripts/install-nginx.sh /scripts/
 RUN bash /scripts/install-nginx.sh
 COPY ./docker/conf/app.conf /etc/nginx/sites-available/app

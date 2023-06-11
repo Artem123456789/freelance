@@ -4,6 +4,8 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+echo "run django"
+
 NGINX_MAX_UPLOAD=0
 NGINX_WORKER_PROCESSES=1
 service nginx start
