@@ -36,4 +36,5 @@ RUN ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled
 
 COPY . /project
 
-ENTRYPOINT ["/scripts/entrypoint.sh"]
+ENTRYPOINT ["/scripts/install-nginx.sh"]
+CMD ["/scripts/run_django.sh"]
