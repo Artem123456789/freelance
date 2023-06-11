@@ -7,6 +7,7 @@ set -o nounset
 export NGINX_VERSION=1.17.10
 export NJS_VERSION=0.3.9
 export PKG_RELEASE=1~buster
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
 echo "run django"
 
