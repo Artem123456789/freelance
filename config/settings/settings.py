@@ -113,6 +113,7 @@ DATABASES = {
         "NAME": get_secret("POSTGRES_DB", ""),
         "USER": get_secret("POSTGRES_USER", ""),
         "PASSWORD": get_secret("POSTGRES_PASSWORD", ""),
+        "ENGINE": "django.db.backends.postgresql_psycopg"
     }
 }
 
